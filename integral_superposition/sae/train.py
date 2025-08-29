@@ -2,6 +2,7 @@
 SAE training utilities.
 """
 
+import numpy as np
 import torch
 from torch import nn
 from typing import Callable, Iterator
@@ -47,6 +48,9 @@ def train_sae(
             if batch.shape[0] > cfg.batch_size:
                 batch = batch[:cfg.batch_size]
             
+            # Convert numpy array to tensor and move to device
+            if isinstance(batch, np.ndarray):
+                batch = torch.from_numpy(batch.astype(np.float32))
             batch = batch.to(device, non_blocking=True)
             
             # Forward pass
