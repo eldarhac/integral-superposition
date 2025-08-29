@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 import torch
 import numpy as np
 from integral_superposition import (
-    Paths, sae, backends, merge, analysis
+    Paths, sae, backends, merge, analysis, dump
 )
 
 
@@ -72,7 +72,7 @@ def main():
     # Create data iterator for refitting
     def activation_iterator():
         """Iterator over activation data."""
-        for batch in backends.dump.stream_shards(act_files, batch=4096):
+        for batch in dump.stream_shards(act_files, batch=4096):
             if batch.shape[0] > 0:
                 yield batch
     
